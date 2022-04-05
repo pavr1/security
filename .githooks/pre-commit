@@ -9,10 +9,9 @@ git diff --cached --name-status | while read st file; do
 	#
 	dirpath=$(git rev-parse --show-toplevel)
 
-	echo "Dir"
-	echo $dirpath/.githooks/pre-commit.go
+	echo "Dir: " $dirpath/.githooks/pre-commit.go
 
-	run $dirpath/.githooks/pre-commit.go $file
+	go run $dirpath/.githooks/pre-commit.go $file
 
 	if [[ $? -eq 1 ]]; then
 		echo "Security check failed"
