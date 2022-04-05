@@ -5,5 +5,5 @@ import "fmt"
 func main() {
 	api_key := "123"
 
-	fmt.Println(api_key + " aaa")
+	fmt.Println(api_key)
 }
