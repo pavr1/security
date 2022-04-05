@@ -1,18 +1,23 @@
 git diff --cached --name-status | while read st file; do
-  # skip deleted files
-  if [ "$st" == 'D' ]; then continue; fi
-     # do a check only on the puppet files
-  echo "Check $file ( $st )"
-  if [[ "$file" =~ ".pp" ]]· 
-  then
-    echo "syntax checking \"$file\""·
-    if  ! puppet --confdir=/tmp --vardir=/tmp --parseonly --ignoreimport "$file"
-    then
-      echo "puppet syntax check failed for file: $file"
-      exit 1
-   fi  
- fi
+	#
+	# Skip deleted files
+	# 
+	if [ "$st" == 'D' ]; then continue; fi
+
+	#
+	# Path to the repository
+	#
+	dirpath=$(git rev-parse --show-toplevel)
+
+	go run $dirpath/.githooks/pre-commit.go $file
+
+	if [[ $? -ne 0 ]]; then
+		echo "Security check failed"
+		git diff $file
+		exit 1
+	fi
 done
+
 
 
 
