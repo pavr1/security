@@ -6,5 +6,5 @@ func main() {
 	api_key := "123"
 	github_token := "sdfsdfsdf"
 
-	fmt.Println(api_key + github_token)
+	fmt.Println(api_key + "" + github_token)
 }
