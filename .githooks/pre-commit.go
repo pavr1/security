@@ -37,11 +37,15 @@ func main() {
 	}
 
 	for _, key := range keys {
+		fmt.Printf(" - validating '%s'...", key)
+
 		if isvalid, info := isValid(fileName, fileContents, key); !isvalid {
-			fmt.Println(info)
+			fmt.Printf("invalid! File Name: '%s'  => "+info+"\n", fileName)
 			os.Exit(1)
 
 			return
+		} else {
+			fmt.Println("valid!")
 		}
 	}
 
