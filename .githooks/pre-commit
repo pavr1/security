@@ -18,7 +18,6 @@ git diff --cached --name-status | while read st file; do
 		git diff $file
 		exit 1
 	fi
-	exit 0
 done
 
 
