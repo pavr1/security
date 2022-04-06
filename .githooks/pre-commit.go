@@ -19,15 +19,10 @@ func main() {
 			"github_refresh_token", "github_app_installation_access_token", "github_ssh_private_key", "shippo_live_api_token", "shopify_app_shared_secret", "shopify_access_token"}
 	)
 
-	fmt.Printf("Argument Length: %d\n", len(os.Args))
-	fmt.Printf("Argument1: %s\n", os.Args[0])
-
 	if len(os.Args) < 3 {
 		fmt.Printf("no arguments supplied in pre-commit check\n")
 		os.Exit(1)
 	}
-
-	fmt.Printf("Argument2: %s\n", os.Args[2])
 
 	fileName := os.Args[2]
 
