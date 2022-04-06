@@ -18,14 +18,16 @@ func main() {
 		keys         = []string{"api_key", "shppa_", "github_token"}
 	)
 
-	fmt.Println(os.Args)
+	fmt.Printf("Argument Length: %d\n", len(os.Args))
 
-	if len(os.Args) < 2 {
+	if len(os.Args) == 0 {
 		fmt.Printf("no arguments supplied in pre-commit check\n")
 		os.Exit(1)
 	}
 
-	fileName := os.Args[1]
+	fmt.Printf("Argument: %s\n", os.Args[0])
+
+	fileName := os.Args[0]
 
 	if fileContents, err = readFile(fileName); err != nil {
 		fmt.Printf("Error reading file for security check: %s\n", err.Error())
