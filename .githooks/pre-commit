@@ -15,7 +15,7 @@ git diff --cached --name-status | while read st file; do
 	go run "home/pavr1/umusic/research/security/.githooks/pre-commit.go" $dirpath/$file
 	#go run main.go $file
 
-	echo "run main.go $dirpath/$file"
+	echo "go run home/pavr1/umusic/research/security/.githooks/pre-commit.go $dirpath/$file"
 
 	if [ $? -gt 0 ]; then
 		echo "Security check failed"
