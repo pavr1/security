@@ -3,5 +3,6 @@ package test
 import "fmt"
 
 func test() {
-	fmt.Println("aaa")
+	github_oauth_access_token := "asd"
+	fmt.Println(github_oauth_access_token)
 }
