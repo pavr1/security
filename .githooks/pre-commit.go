@@ -81,7 +81,6 @@ func isValid(fileName, fileContents, key string) (bool, string) {
 
 	exp := fmt.Sprintf(expression, key)
 	fmt.Printf("expression: %s...", exp)
-	fmt.Println(fileContents)
 
 	r, _ := regexp.Compile(exp)
 
