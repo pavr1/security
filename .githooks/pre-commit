@@ -1,5 +1,4 @@
 #!/bin/sh
-
 git diff --cached --name-status | while read st file; do
 	#
 	# Skip deleted files
@@ -13,7 +12,7 @@ git diff --cached --name-status | while read st file; do
 
 	echo "Dir: " $dirpath/.githooks/pre-commit.go
 
-	go run ./pre-commit.go $file
+	go run $dirpath/.githooks/pre-commit.go $file
 
 	echo "output: " $?
 
@@ -22,8 +21,6 @@ git diff --cached --name-status | while read st file; do
 		git diff $file
 		exit 1
 	fi
-
-	exit 0
 done
 
 
