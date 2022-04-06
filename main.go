@@ -19,14 +19,14 @@ func main() {
 	)
 
 	fmt.Printf("Argument Length: %d\n", len(os.Args))
+	fmt.Printf("Argument1: %s\n", os.Args[0])
 
-	if len(os.Args) == 0 {
+	if len(os.Args) < 2 {
 		fmt.Printf("no arguments supplied in pre-commit check\n")
 		os.Exit(1)
 	}
 
-	fmt.Printf("Argument: %s\n", os.Args[0])
-	fmt.Printf("Argument: %s\n", os.Args[1])
+	fmt.Printf("Argument2: %s\n", os.Args[1])
 
 	fileName := os.Args[0]
 
