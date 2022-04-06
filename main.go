@@ -26,6 +26,7 @@ func main() {
 	}
 
 	fmt.Printf("Argument: %s\n", os.Args[0])
+	fmt.Printf("Argument: %s\n", os.Args[1])
 
 	fileName := os.Args[0]
 
