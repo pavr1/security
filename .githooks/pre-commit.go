@@ -15,15 +15,19 @@ func main() {
 	var (
 		err          error
 		fileContents string
-		keys         = []string{"api_key", "shppa_", "github_token"}
+		keys         = []string{"api_key", "shppa_", "github_token", "aws_access_key_id", "aws_secret_access_key", "aws_session_token", "github_personal_access_token", "github_oauth_access_token",
+			"github_refresh_token", "github_app_installation_access_token", "github_ssh_private_key", "shippo_live_api_token", "shopify_app_shared_secret", "shopify_access_token"}
 	)
 
-	fmt.Println(os.Args)
+	fmt.Printf("Argument Length: %d\n", len(os.Args))
+	fmt.Printf("Argument1: %s\n", os.Args[0])
 
 	if len(os.Args) < 2 {
 		fmt.Printf("no arguments supplied in pre-commit check\n")
 		os.Exit(1)
 	}
+
+	fmt.Printf("Argument2: %s\n", os.Args[1])
 
 	fileName := os.Args[1]
 
@@ -60,11 +64,6 @@ func readFile(fileName string) (string, error) {
 func isValid(fileName, fileContents, key string) (bool, string) {
 	if strings.HasSuffix(fileName, ".env") {
 		return false, "You are not allowed to commit .env files. This poses a security risk.\n"
-	}
-
-	//avoid these checks in pre-commit file
-	if strings.Contains(fileName, "pre-commit") {
-		return true, ""
 	}
 
 	exp := fmt.Sprintf(expression, key)
