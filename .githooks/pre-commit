@@ -14,10 +14,12 @@ git diff --cached --name-status | while read st file; do
 	
 	echo "Status: " $?
 
-	if [[ $? -eq 1 ]]; then
+	if [ $? -eq 1 ]; then
 		echo "Security check failed"
 		git diff $file
 		exit 1
+	else
+		echo "not equal"
 	fi
 	exit 0
 done
