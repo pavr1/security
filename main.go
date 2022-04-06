@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	api_key := "asdasd "
+	api_key := "asdasd"
 
 	fmt.Println(api_key)
 }
