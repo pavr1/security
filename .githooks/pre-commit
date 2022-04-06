@@ -13,13 +13,13 @@ git diff --cached --name-status | while read st file; do
 	go run $dirpath/.githooks/pre-commit.go -- $dirpath/$file
 	
 	if [ $? -eq 1 ]; then
-		echo "Security check failed. Status " $?
+		echo "Security check failed"
 		
 		git diff --cached $file
 
 		exit 1
 	else
-		echo "Security check success. Status " $?
+		echo "Security check success"
 	fi
 	exit 0
 done
