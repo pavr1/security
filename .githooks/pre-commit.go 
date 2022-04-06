@@ -7,10 +7,15 @@ import (
 	"strings"
 )
 
+const (
+	expression = "(?i)%s\\s*(=|:=|==|===)\\s*[\"'`]{1}.*?[\"'`]"
+)
+
 func main() {
 	var (
 		err          error
 		fileContents string
+		keys         = []string{"api_key", "shppa_", "github_token"}
 	)
 
 	if len(os.Args) < 2 {
@@ -30,19 +35,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	if containsApiKey(fileContents) {
-		fmt.Printf("It looks like you are attempting to set an API key in %s. This is not allowed.\n", fileName)
-		os.Exit(1)
-	}
-
-	if containsShopifyKeys(fileContents) {
-		fmt.Printf("It looks like you are attempting to set Shopify credentials in %s. This is not allowed.\n", fileName)
-		os.Exit(1)
-	}
-
-	if containsGithubToken(fileContents) {
-		fmt.Printf("It looks like you are attemting to set a GITHUB_TOKEN in %s. This is not allowed.\n", fileName)
-		os.Exit(1)
+	for _, key := range keys {
+		if isvalid, info := isValid(fileName, fileContents, key); !isvalid {
+			fmt.Println(info)
+			os.Exit(1)
+		}
 	}
 
 	os.Exit(0)
@@ -65,17 +62,15 @@ func isEnvFile(fileName string) bool {
 	return strings.HasSuffix(fileName, ".env")
 }
 
-func containsApiKey(fileContents string) bool {
-	r, _ := regexp.Compile("(?i)api_key\\s*(=|:=|==|===)\\s*[\"'`]{1}.*?[\"'`]")
-	return r.MatchString(fileContents)
-}
+func isValid(fileName, fileContents, key string) (bool, string) {
+	exp := fmt.Sprintf(expression, key)
+	r, _ := regexp.Compile(exp)
 
-func containsShopifyKeys(fileContents string) bool {
-	r, _ := regexp.Compile("(?i)shppa_.*?\\s*(=|:=|==|===)\\s*[\"'`]{1}.*?[\"'`]")
-	return r.MatchString(fileContents)
-}
+	valid := r.MatchString(fileContents)
 
-func containsGithubToken(fileContents string) bool {
-	r, _ := regexp.Compile("(?i)github_token\\s*(=|:=|==|===)\\s*[\"'`]{1}.*?[\"'`]")
-	return r.MatchString(fileContents)
+	if !valid {
+		return false, fmt.Sprintf("It looks like you are attemting to set a '%s' in %s. This is not allowed.\n", key, fileName)
+	} else {
+		return true, ""
+	}
 }
