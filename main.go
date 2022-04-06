@@ -60,13 +60,18 @@ func isValid(fileName, fileContents, key string) (bool, string) {
 		return false, "You are not allowed to commit .env files. This poses a security risk.\n"
 	}
 
+	//avoid these checks in pre-commit file
+	if strings.Contains(fileName, "pre-commit") {
+		return true, ""
+	}
+
 	exp := fmt.Sprintf(expression, key)
 	r, _ := regexp.Compile(exp)
 
 	valid := r.MatchString(fileContents)
 
 	if !valid {
-		return false, fmt.Sprintf("It looks like you are attemting to set a '%s' in %s. This is not allowed.\n", key, fileName)
+		return false, fmt.Sprintf("It looks like you are attemting to set a '%s' in %s, this is not allowed.\n", key, fileName)
 	} else {
 		return true, ""
 	}
