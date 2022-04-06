@@ -18,9 +18,6 @@ func main() {
 		keys         = []string{"api_key", "shppa_", "github_token"}
 	)
 
-	var api_key = "asdasdas"
-
-	fmt.Println(api_key)
 	if len(os.Args) < 2 {
 		fmt.Printf("no arguments supplied in pre-commit check\n")
 		os.Exit(1)
