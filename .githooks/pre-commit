@@ -22,7 +22,6 @@ git diff --cached --name-status | while read st file; do
 	else
 		echo "Security check success"
 	fi
-	exit 0
 done
 
 
