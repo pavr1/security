@@ -4,7 +4,7 @@ git diff --cached --name-status | while read st file; do
 	# Skip deleted files
 	# 
 	echo "st val: $st"
-	if [ $st == 'D' ]; then continue; fi
+	if [ '$st' == 'D' ]; then continue; fi
 
 	#
 	# Path to the repository
