@@ -1,24 +1,24 @@
 #!/bin/sh
 git diff --cached --name-status | while read st file; do
-	#
-	# Skip deleted files
-	# 
-	if [ "$st" = 'D' ]; then continue; fi
+	# #
+	# # Skip deleted files
+	# # 
+	# if [ "$st" = 'D' ]; then continue; fi
 
-	#
-	# Path to the repository
-	#
-	dirpath=$(git rev-parse --show-toplevel)
+	# #
+	# # Path to the repository
+	# #
+	# dirpath=$(git rev-parse --show-toplevel)
 
-	echo "File Name: " $file
+	# echo "File Name: " $file
 
-	go run ./main.go $file
+	# go run ./main.go $file
 
-	if [ $? -gt 0 ]; then
-		echo "Security check failed"
-		git diff $file
-		exit 1
-	fi
+	# if [ $? -gt 0 ]; then
+	# 	echo "Security check failed"
+	# 	git diff $file
+	# 	exit 1
+	# fi
 	exit 0
 done
 
