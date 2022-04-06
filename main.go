@@ -6,7 +6,7 @@ import (
 
 func main() {
 	api_key := "123"
-	github_token := "fgggggd g"
+	github_token := "fgggggdg"
 
 	fmt.Println(api_key + "" + github_token)
 }
