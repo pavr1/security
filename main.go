@@ -28,7 +28,7 @@ func main() {
 
 	fmt.Printf("Argument2: %s\n", os.Args[1])
 
-	fileName := os.Args[0]
+	fileName := os.Args[1]
 
 	if fileContents, err = readFile(fileName); err != nil {
 		fmt.Printf("Error reading file for security check: %s\n", err.Error())
@@ -63,11 +63,6 @@ func readFile(fileName string) (string, error) {
 func isValid(fileName, fileContents, key string) (bool, string) {
 	if strings.HasSuffix(fileName, ".env") {
 		return false, "You are not allowed to commit .env files. This poses a security risk.\n"
-	}
-
-	//avoid these checks in pre-commit file
-	if strings.Contains(fileName, "pre-commit") {
-		return true, ""
 	}
 
 	exp := fmt.Sprintf(expression, key)
