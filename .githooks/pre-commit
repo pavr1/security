@@ -9,6 +9,7 @@ git diff --cached --name-status | while read st file; do
 	# Path to the repository
 	#
 	dirpath=$(git rev-parse --show-toplevel)
+	echo "Dir Path: " $dirpath
 	echo "File Name: " $file
 	go run $dirpath/.githooks/pre-commit.go -- $dirpath/$file
 	
