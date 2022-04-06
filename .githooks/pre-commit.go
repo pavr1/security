@@ -25,7 +25,6 @@ func main() {
 	if len(os.Args) < 3 {
 		fmt.Printf("no arguments supplied in pre-commit check\n")
 		os.Exit(1)
-		return
 	}
 
 	fmt.Printf("Argument2: %s\n", os.Args[2])
@@ -35,7 +34,6 @@ func main() {
 	if fileContents, err = readFile(fileName); err != nil {
 		fmt.Printf("Error reading file for security check: %s\n", err.Error())
 		os.Exit(1)
-		return
 	}
 
 	for _, key := range keys {
