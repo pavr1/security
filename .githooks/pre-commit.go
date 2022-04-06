@@ -85,10 +85,10 @@ func isValid(fileName, fileContents, key string) (bool, string) {
 
 	r, _ := regexp.Compile(exp)
 
-	valid := r.MatchString(fileContents)
-	fmt.Printf("is valid: %t", valid)
+	match := r.MatchString(fileContents)
+	fmt.Printf("is valid: %t", !match)
 
-	if !valid {
+	if match {
 		return false, fmt.Sprintf("It looks like you are attemting to set a '%s' in %s, this is not allowed.\n", key, fileName)
 	} else {
 		return true, ""
