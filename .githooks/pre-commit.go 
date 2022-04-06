@@ -18,6 +18,8 @@ func main() {
 		keys         = []string{"api_key", "shppa_", "github_token"}
 	)
 
+	fmt.Println(os.Args)
+
 	if len(os.Args) < 2 {
 		fmt.Printf("no arguments supplied in pre-commit check\n")
 		os.Exit(1)
@@ -30,15 +32,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	if isEnvFile(fileName) {
-		fmt.Printf("You are not allowed to commit .env files. This poses a security risk.\n")
-		os.Exit(1)
-	}
-
 	for _, key := range keys {
 		if isvalid, info := isValid(fileName, fileContents, key); !isvalid {
 			fmt.Println(info)
 			os.Exit(1)
+
+			return
 		}
 	}
 
@@ -58,18 +57,23 @@ func readFile(fileName string) (string, error) {
 	return string(b), nil
 }
 
-func isEnvFile(fileName string) bool {
-	return strings.HasSuffix(fileName, ".env")
-}
-
 func isValid(fileName, fileContents, key string) (bool, string) {
+	if strings.HasSuffix(fileName, ".env") {
+		return false, "You are not allowed to commit .env files. This poses a security risk.\n"
+	}
+
+	//avoid these checks in pre-commit file
+	if strings.Contains(fileName, "pre-commit") {
+		return true, ""
+	}
+
 	exp := fmt.Sprintf(expression, key)
 	r, _ := regexp.Compile(exp)
 
 	valid := r.MatchString(fileContents)
 
 	if !valid {
-		return false, fmt.Sprintf("It looks like you are attemting to set a '%s' in %s. This is not allowed.\n", key, fileName)
+		return false, fmt.Sprintf("It looks like you are attemting to set a '%s' in %s, this is not allowed.\n", key, fileName)
 	} else {
 		return true, ""
 	}
