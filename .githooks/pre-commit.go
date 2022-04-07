@@ -35,7 +35,7 @@ func main() {
 		fmt.Printf(" - validating '%s'...", key)
 
 		if isvalid, info := isValid(fileName, fileContents, key); !isvalid {
-			fmt.Printf("invalid! File Name: '%s'  => "+info+"\n", fileName)
+			fmt.Printf("invalid! => %s\n", info)
 			os.Exit(1)
 
 			return
