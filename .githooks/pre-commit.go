@@ -61,18 +61,24 @@ func isValid(fileName, fileContents string) (bool, string) {
 		return false, "You are not allowed to commit .env files. This poses a security risk.\n"
 	}
 
+	fmt.Println("Not an .env file. Proceeding...")
+
 	//avoid validating pre-commit file
 	if strings.Contains(fileName, "pre-commit") {
 		return true, ""
 	}
 
-	for _, exp := range expressions {
+	fmt.Println("Not a pre-commit file. Proceeding...")
+
+	for i, exp := range expressions {
 		r, _ := regexp.Compile(exp)
 
 		match := r.MatchString(fileContents)
 
 		if match {
 			return false, fmt.Sprintf("It looks like you are attemting to set token in file '%s'. This is not allowed\n", fileName)
+		} else {
+			fmt.Printf("Expression ·%d valid", i)
 		}
 	}
 
