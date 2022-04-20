@@ -9,8 +9,7 @@ import (
 
 var (
 	expressions = []string{
-		`[a-zA-Z0-9]+ := "\w{8,}"`,
-		`^[a-zA-Z]+ := "[^"]*.{8,}"`,
+		"[a-zA-Z0-9]+ := \"\\w+.{15,}\"",
 	}
 )
 
@@ -21,24 +20,24 @@ func main() {
 	)
 
 	if len(os.Args) < 3 {
-		fmt.Printf("no arguments supplied in pre-commit check\n")
+		fmt.Print("	no arguments supplied in pre-commit check.")
 		os.Exit(1)
 	}
 
 	fileName := os.Args[2]
 
 	if fileContents, err = readFile(fileName); err != nil {
-		fmt.Printf("Error reading file for security check: %s\n", err.Error())
+		fmt.Printf("	error reading file for security check: %s.", err.Error())
 		os.Exit(1)
 	}
 
 	if isvalid, info := isValid(fileName, fileContents); !isvalid {
-		fmt.Printf("invalid! => %s\n", info)
+		fmt.Printf("	invalid! => %s\n", info)
 		os.Exit(1)
 
 		return
 	} else {
-		fmt.Println("valid!")
+		fmt.Print("	valid.")
 	}
 	os.Exit(0)
 }
@@ -58,27 +57,28 @@ func readFile(fileName string) (string, error) {
 
 func isValid(fileName, fileContents string) (bool, string) {
 	if strings.Contains(fileName, ".env") {
-		return false, "You are not allowed to commit .env files. This poses a security risk.\n"
+		return false, "	You are not allowed to commit .env files. This poses a security risk.\n"
 	}
-
-	fmt.Println("Not an .env file. Proceeding...")
 
 	//avoid validating pre-commit file
 	if strings.Contains(fileName, "pre-commit") {
 		return true, ""
 	}
 
-	fmt.Println("Not a pre-commit file. Proceeding...")
-
 	for i, exp := range expressions {
-		r, _ := regexp.Compile(exp)
+		r, err := regexp.Compile(exp)
+		if err != nil {
+			return false, fmt.Sprintf("	there was an error compiling regex '%s'. Error: %v", exp, err)
+		}
 
-		match := r.MatchString(fileContents)
+		match := r.Match([]byte(fileContents))
+
+		fmt.Printf("	Exp: %s, Match: %t\n", exp, match)
 
 		if match {
-			return false, fmt.Sprintf("It looks like you are attemting to set a token value in file '%s'. This is not allowed\n", fileName)
+			return false, fmt.Sprintf("looks like you left a token or key in file '%s'. This is not allowed!\n", fileName)
 		} else {
-			fmt.Printf("Expression #%d valid\n", i+1)
+			fmt.Printf("	Expression #%d valid\n", i+1)
 		}
 	}
 

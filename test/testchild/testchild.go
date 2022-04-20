@@ -3,6 +3,6 @@ package testchild
 import "fmt"
 
 func testchild() {
-	anotherKey := "as d"
+	anotherKey := "123sa"
 	fmt.Println(anotherKey)
 }
