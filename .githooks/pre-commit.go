@@ -73,12 +73,10 @@ func isValid(fileName, fileContents string) (bool, string) {
 
 		match := r.Match([]byte(fileContents))
 
-		fmt.Printf("	Exp: %s, Match: %t\n", exp, match)
+		fmt.Printf("	Exp: %d, Match: %t\n", i+1, match)
 
 		if match {
 			return false, fmt.Sprintf("looks like you left a token or key in file '%s'. This is not allowed!\n", fileName)
-		} else {
-			fmt.Printf("	Expression #%d valid\n", i+1)
 		}
 	}
 
