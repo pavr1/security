@@ -9,8 +9,8 @@ import (
 
 var (
 	expressions = []string{
-		"^[a-zA-Z0-9]+$",
-		"^[a-zA-Z0-9]:[a-zA-Z]{3}[a-zA-Z0-9]",
+		`[a-zA-Z0-9]+ := "\w{8,}"`,
+		`^[a-zA-Z]+ := "[^"]*.{8,}"`,
 	}
 )
 
@@ -76,7 +76,7 @@ func isValid(fileName, fileContents string) (bool, string) {
 		match := r.MatchString(fileContents)
 
 		if match {
-			return false, fmt.Sprintf("It looks like you are attemting to set token in file '%s'. This is not allowed\n", fileName)
+			return false, fmt.Sprintf("It looks like you are attemting to set a token value in file '%s'. This is not allowed\n", fileName)
 		} else {
 			fmt.Printf("Expression #%d valid\n", i+1)
 		}

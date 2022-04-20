@@ -3,6 +3,6 @@ package testgrandchild
 import "fmt"
 
 func testGrandChild() {
-	key := "asd"
-	fmt.Println(key)
+	keyTest2 := "12"
+	fmt.Println(keyTest2)
 }
