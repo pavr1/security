@@ -61,7 +61,7 @@ func readFile(fileName string) (string, error) {
 }
 
 func isValid(fileName, fileContents, key string) (bool, string) {
-	if strings.HasSuffix(fileName, ".env") {
+	if strings.Contains(fileName, ".env") {
 		return false, "You are not allowed to commit .env files. This poses a security risk.\n"
 	}
 
