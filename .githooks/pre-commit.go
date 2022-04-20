@@ -78,7 +78,7 @@ func isValid(fileName, fileContents string) (bool, string) {
 		if match {
 			return false, fmt.Sprintf("It looks like you are attemting to set token in file '%s'. This is not allowed\n", fileName)
 		} else {
-			fmt.Printf("Expression ·%d valid", i)
+			fmt.Printf("Expression ·%d valid\n", i+1)
 		}
 	}
 
