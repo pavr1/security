@@ -7,10 +7,12 @@ import (
 	"strings"
 )
 
+//greater than 15 chars
 var (
 	expressions = []string{
 		//"[a-zA-Z0-9]+ := \"\\w+.{15,}\"",
-		"= \"\\w+.{15,}\"",
+		"\"\\w+.{15,}\"",
+		"`\\w+.{15,}`",
 	}
 )
 
